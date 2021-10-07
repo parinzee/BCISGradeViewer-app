@@ -1,4 +1,4 @@
-name: Test Server
+name: Test Python Server (Backend)
 on:
   push:
     branches: [ development ]
@@ -40,6 +40,3 @@ jobs:
         run: |
               cd server
               poetry run pytest --cov
-        
-      
-          
