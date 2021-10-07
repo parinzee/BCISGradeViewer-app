@@ -28,14 +28,18 @@ jobs:
             poetry install
       
       - name: Code Quality
-        run: poetry run black . --check
+        run: |
+              cd server
+              poetry run black . --check
         
       - name: Pytest Testing
         env:
             GV_USERNAME: ${{ secrets.GV_USERNAME }}
             GV_PASS: ${{ secrets.GV_PASS }}
             GV_STUDENTID: ${{ secrets.GV_STUDENTID }}
-        run: poetry run pytest --cov
+        run: |
+              cd server
+              poetry run pytest --cov
         
       
           
