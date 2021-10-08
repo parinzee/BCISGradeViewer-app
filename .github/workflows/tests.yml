@@ -1,42 +1,42 @@
 name: Test Python Server (Backend)
 on:
-  push:
-    branches: [ development ]
-  pull_request:
-    branches: [ development ]
-  workflow_dispatch:
-  
-jobs:
-  CI:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
+    push:
+        branches: [development]
+    pull_request:
+        branches: [development]
+    workflow_dispatch:
 
-      - name: Setup Poetry
-        uses: abatilo/actions-poetry@v2.1.3
-        with:
-          poetry-version: 1.1.10
-        
-      - name: Setup Project
-        run: |
-            cd server
-            poetry install
-      
-      - name: Code Quality
-        run: |
-              cd server
-              poetry run black . --check
-        
-      - name: Pytest Testing
-        env:
-            GV_USERNAME: ${{ secrets.GV_USERNAME }}
-            GV_PASS: ${{ secrets.GV_PASS }}
-            GV_STUDENTID: ${{ secrets.GV_STUDENTID }}
-        run: |
-              cd server
-              poetry run pytest --cov
+jobs:
+    CI:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Setup Python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: 3.8
+
+            - name: Setup Poetry
+              uses: abatilo/actions-poetry@v2.1.3
+              with:
+                  poetry-version: 1.1.10
+
+            - name: Setup Project
+              run: |
+                  cd server
+                  poetry install
+
+            - name: Code Quality
+              run: |
+                  cd server
+                  poetry run black . --check
+
+            - name: Pytest Testing
+              env:
+                  GV_USERNAME: ${{ secrets.GV_USERNAME }}
+                  GV_PASS: ${{ secrets.GV_PASS }}
+                  GV_STUDENTID: ${{ secrets.GV_STUDENTID }}
+              run: |
+                  cd server
+                  poetry run pytest --cov
