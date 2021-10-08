@@ -183,8 +183,3 @@ class User:
         return self.session.get(
             f"{self.baseURL}/NAScopy/Gradebook/GradeBookProgressReport-PW.cfm?District={self.districtCode}&StudentID={studentID}&ClassID={classID}&TermID={termID}&SchoolCode={self.districtCode.split('-')[0]}"
         ).text
-
-
-Thanya = User("Thanyaluk", "12304zee")
-# print(Thanya.get_subjects())
-print(Thanya.get_subject_grade_book(10255, 4000, 1))
