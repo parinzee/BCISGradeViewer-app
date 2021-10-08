@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends
 
-from ..dependencies import get_current_user, oauthScheme, OauthUser
+from ..security import get_current_user, oauthScheme, OauthUser
 from ..scraper.user import User
 
 router = APIRouter(tags=["User"])
 
 
 @router.get("/me/")
-async def get_current_user(current_user: OauthUser):
+async def get_curr_user(current_user: OauthUser = Depends(get_current_user)):
     return current_user
 
 
