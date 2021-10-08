@@ -13,4 +13,4 @@ app.include_router(token.router)
 
 
 def run_app():
-    uvicorn.run(app, host="0.0.0.0")
+    uvicorn.run("server.main:app", host="0.0.0.0", reload=True)
