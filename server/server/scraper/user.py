@@ -5,7 +5,7 @@ from typing import Dict, List
 import requests
 from bs4 import BeautifulSoup
 
-from ..config import districtCode, districtCodeUrl
+from ..config import DISTRICT_CODE, DISTRICT_CODE_URL
 from ..exceptions import NotAuthenticated
 
 
@@ -23,9 +23,9 @@ class User:
         # Initialize values
         self.username = username
         self.password = password
-        self.districtCode = districtCode
+        self.districtCode = DISTRICT_CODE
         self.userType = userType
-        self.baseURL = f"https://{districtCodeUrl}.client.renweb.com/pwr"
+        self.baseURL = f"https://{DISTRICT_CODE_URL}.client.renweb.com/pwr"
         self.session = requests.session()
 
         # Perform authentication
@@ -139,7 +139,7 @@ class User:
                 # Process is below is to find the subject names and grade
                 subjectsAndGrade = []
                 subjects = [i.text.strip("\n") for i in tableBody.find_all("td")]
-                for index in enumerate(subjects):
+                for index, _ in enumerate(subjects):
                     if index % 3 == 0:
                         subjectsAndGrade.append(
                             {

@@ -1,8 +1,15 @@
 from fastapi.responses import ORJSONResponse
+from os import environ
 
-# Sets district code for accessing renweb. If self-deploying you may have to change this.
-districtCode = "BC-THA"
-districtCodeUrl = districtCode.lower()
+### SCRAPER SETTINGS ###
+DISTRICT_CODE = "BC-THA"  # Sets district code for accessing renweb. If self-deploying you may have to change this.
+DISTRICT_CODE_URL = DISTRICT_CODE.lower()
 
-# Response type. See fastapi docs https://fastapi.tiangolo.com/advanced/custom-response/ for availble values.
-JSONresponse = ORJSONResponse
+
+### SERVER SETTINGS ###
+JSON_RESPONSE = ORJSONResponse  # Response type. See fastapi docs https://fastapi.tiangolo.com/advanced/custom-response/ for availble values.
+
+### Oauth2 Settings ###
+ACCESS_TOKEN_EXPIRE_DAYS = 15  # Time before Oauth2 token expires.
+SECRET_KEY = environ["GV_SECRET"]  # Key to sign JWT tokens (run: openssl rand -hex 32)
+ALGORITHM = "HS256"  # Algorithm for signing JWT
