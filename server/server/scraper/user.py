@@ -1,5 +1,5 @@
 import re, requests
-from typing import Dict, List, Union
+from typing import Dict, List
 from bs4 import BeautifulSoup
 from ..config import districtCode, districtCodeUrl
 from ..exceptions import NotAuthenticated
@@ -115,11 +115,10 @@ class User:
 
         return studentIDList
 
-    def get_subjects_all(self) -> List[dict]:
+    def get_subjects(self, studentID: int = None) -> List[dict]:
         """
-        Get all the subjects for that a student has. Support for parents with multiple children is still on-going.
+        Get all the subjects for the specified studentID. If unspecified, will fetch subjects for all studentIDs for the user.
         """
-        # TODO: Add support for parents with multiple children
 
         # Initialize list for storing urls
         classes = []
@@ -154,14 +153,21 @@ class User:
 
                         # For each <a> tag get the href that has the actuall link
                         link: str = link.get("href")
-                        studentID, classID, termID = link.split("?")[1].split("&")
-                        classes.append(
-                            {
-                                "studentID": int(studentID.split("=")[1]),
-                                "classID": int(classID.split("=")[1]),
-                                "termID": int(termID.split("=")[1]),
-                            }
-                        )
+                        linkStudentID, linkClassID, linkTermID = link.split("?")[
+                            1
+                        ].split("&")
+                        if studentID != None and studentID != int(
+                            linkStudentID.split("=")[1]
+                        ):
+                            next
+                        else:
+                            classes.append(
+                                {
+                                    "studentID": int(linkStudentID.split("=")[1]),
+                                    "classID": int(linkClassID.split("=")[1]),
+                                    "termID": int(linkTermID.split("=")[1]),
+                                }
+                            )
 
                 # Merge the two dictionaries in order to get the complete className, classID, and grades.
                 for subjectAndGrade, subject in zip(subjectsAndGrade, classes):
@@ -170,13 +176,15 @@ class User:
 
         return classes
 
-    def get_subject_one(self, studentID: int) -> List[dict]:
+    def get_subject_grade_book(self, studentID: int, classID: int, termID: int) -> str:
         """
-        Gets the subject for one student only
+        Gets the html of the specified gradebook
         """
-        allSubjects = self.get_subjects_all()
-        return list(
-            filter(
-                lambda x: True if x["studentID"] == studentID else False, allSubjects
-            )
-        )
+        return self.session.get(
+            f"{self.baseURL}/NAScopy/Gradebook/GradeBookProgressReport-PW.cfm?District={self.districtCode}&StudentID={studentID}&ClassID={classID}&TermID={termID}&SchoolCode={self.districtCode.split('-')[0]}"
+        ).text
+
+
+Thanya = User("Thanyaluk", "12304zee")
+# print(Thanya.get_subjects())
+print(Thanya.get_subject_grade_book(10255, 4000, 1))
