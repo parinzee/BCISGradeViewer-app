@@ -139,7 +139,7 @@ class User:
                 # Process is below is to find the subject names and grade
                 subjectsAndGrade = []
                 subjects = [i.text.strip("\n") for i in tableBody.find_all("td")]
-                for index in range(len(subjects)):
+                for index in enumerate(subjects):
                     if index % 3 == 0:
                         subjectsAndGrade.append(
                             {
@@ -163,7 +163,7 @@ class User:
                         if studentID != None and studentID != int(
                             linkStudentID.split("=")[1]
                         ):
-                            next
+                            pass
                         else:
                             classes.append(
                                 {
