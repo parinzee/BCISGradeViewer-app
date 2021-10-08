@@ -1,6 +1,10 @@
-import re, requests
+import asyncio
+import re
 from typing import Dict, List
+
+import requests
 from bs4 import BeautifulSoup
+
 from ..config import districtCode, districtCodeUrl
 from ..exceptions import NotAuthenticated
 
@@ -183,3 +187,16 @@ class User:
         return self.session.get(
             f"{self.baseURL}/NAScopy/Gradebook/GradeBookProgressReport-PW.cfm?District={self.districtCode}&StudentID={studentID}&ClassID={classID}&TermID={termID}&SchoolCode={self.districtCode.split('-')[0]}"
         ).text
+
+    async def get_all(self):
+        """
+        Method to retrieve: events, studentIDs, and subjects asynchronously.
+        """
+        loop = asyncio.get_running_loop()
+        events, studentIDs, subjects = await asyncio.gather(
+            loop.run_in_executor(None, self.get_events),
+            loop.run_in_executor(None, self.get_studentIDs),
+            loop.run_in_executor(None, self.get_subjects),
+        )
+
+        return {"events": events, "studentIDs": studentIDs, "subjects": subjects}

@@ -1,3 +1,4 @@
+import asyncio
 from os import environ
 from server.scraper.user import User
 from random import randint
@@ -57,7 +58,20 @@ def test_get_subject_grade_book():
         selectedSubject["termID"],
     )
 
+    # Make sure the html returned has that class name is not a 500 Error
     assert (
         selectedSubject["className"] in response
         and "500 - Internal server error." not in response
     )
+
+
+def test_get_all():
+    loop = asyncio.get_event_loop()
+    user = User(username, password)
+    # Run in the event loop
+    data = loop.run_until_complete(asyncio.gather(user.get_all()))[0]
+
+    # Make sure the dictionaries are not empty.
+    assert data["events"] != []
+    assert data["studentIDs"] != []
+    assert data["subjects"] != []
