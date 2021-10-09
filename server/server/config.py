@@ -12,7 +12,7 @@ JSON_RESPONSE = ORJSONResponse  # Response type. See fastapi docs https://fastap
 ### Oauth2 SETTINGS ###
 SECRET_KEY = environ["GV_SECRET"]  # Key to sign JWT tokens (run: openssl rand -hex 32)
 FERNET_KEY = environ["GV_FERNET"]  # Encrypt password with Fernet. (generate key first)
-ACCESS_TOKEN_EXPIRE_DAYS = 15  # Time before Oauth2 token expires.
+ACCESS_TOKEN_EXPIRE_DAYS = None  # Time before Oauth2 token expires, setting to None because a mobile app stays logged in.
 ALGORITHM = "HS256"  # Algorithm for signing JWT
 
 ### SQL SETTINGS ###
