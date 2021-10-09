@@ -7,15 +7,17 @@ from ..exceptions import NotAuthenticated
 
 router = APIRouter(tags=["Token"], prefix="/token")
 
-# Gets the current user
+# Gets the current user at /token/me
 @router.get("/me/")
 async def get_curr_user(current_user: OauthUser = Depends(get_current_user)):
     return current_user
 
 
+# Login at /token/
 @router.post("/")
-async def login(formData: OAuth2PasswordRequestForm = Depends()):
+async def login(parent: bool, formData: OAuth2PasswordRequestForm = Depends()):
     # TODO: If user exists in database, don't waste time connecting to servers.
+    # TODO: Also handle the parent boolean.
     try:
         User(formData.username, formData.password)
     except NotAuthenticated:
