@@ -34,9 +34,10 @@ jobs:
 
             - name: Pytest Testing
               env:
-                  GV_USERNAME: ${{ secrets.GV_USERNAME }}
-                  GV_PASS: ${{ secrets.GV_PASS }}
-                  GV_STUDENTID: ${{ secrets.GV_STUDENTID }}
+                  GV_TEST_USERNAME: ${{ secrets.GV_TEST_USERNAME }}
+                  GV_TEST_PASSWORD: ${{ secrets.GV_TEST_PASSWORD }}
+                  GV_TEST_STUDENTID: ${{ secrets.GV_TEST_STUDENTID }}
+                  GV_DISTRICT_CODE: ${{ secrets.GV_DISTRICT_CODE }}
                   GV_SECRET: ${{ secrets.GV_SECRET }}
                   GV_FERNET: ${{ secrets.GV_FERNET }}
                   DATABASE_URL: ${{ secrets.DATABASE_URL }}

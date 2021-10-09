@@ -10,8 +10,8 @@ client = TestClient(app)
 
 
 # Get a valid username & password to test against from ENV variables
-username = environ["GV_USERNAME"]
-password = environ["GV_PASS"]
+username = environ["GV_TEST_USERNAME"]
+password = environ["GV_TEST_PASSWORD"]
 
 
 def test_get_current_user():

@@ -4,9 +4,9 @@ from server.scraper.user import User
 from random import randint
 
 # Get the username, password, and student id to test against from ENV variables
-username = environ["GV_USERNAME"]
-password = environ["GV_PASS"]
-studentID = int(environ["GV_STUDENTID"])
+username = environ["GV_TEST_USERNAME"]
+password = environ["GV_TEST_PASSWORD"]
+studentID = int(environ["GV_TEST_STUDENTID"])
 
 # Tests the Connectivity
 def test_connectivity():

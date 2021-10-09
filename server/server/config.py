@@ -2,7 +2,7 @@ from fastapi.responses import ORJSONResponse
 from os import environ
 
 ### SCRAPER SETTINGS ###
-DISTRICT_CODE = "BC-THA"  # Sets district code for accessing renweb. If self-deploying you may have to change this.
+DISTRICT_CODE = environ["GV_DISTRICT_CODE"]  # Code for accessing renweb. Ex: BC-THA
 DISTRICT_CODE_URL = DISTRICT_CODE.lower()
 
 
