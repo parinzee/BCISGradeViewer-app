@@ -17,39 +17,20 @@ def test_connectivity():
     assert True
 
 
-def test_get_events():
-    assert User(username, password).get_events() != []
-
-
-def test_get_studentIDs():
-    assert User(username, password).get_studentIDs() != []
-
-
-def test_get_subjects_all():
-    assert User(username, password).get_subjects() != []
-
-
-def test_get_subject_one():
-    passing = True
+def test_methods():
     user = User(username, password)
-    # Gets the subject for one student
-    subjects = user.get_subjects(studentID)
-    if subjects == []:
-        passing = False
-    assert passing
+    assert user.get_events() != []
 
+    assert user.get_studentIDs() != []
+
+    assert user.get_subjects() != []
+
+    subjects = user.get_subjects(studentID)
+    assert subjects != []
     for subject in subjects:
-        # If other students exist also failed
-        if subject["studentID"] != studentID:
-            passing = False
+        assert subject["studentID"] == studentID
 
-    assert passing
-
-
-def test_get_subject_grade_book():
-    user = User(username, password)
-    subjects = user.get_subjects(studentID)
-    # Pick a random subject
+    # Test get_subject_grade_book
     index = randint(0, len(subjects) - 1)
     selectedSubject = subjects[index]
     response = user.get_subject_grade_book(
@@ -57,17 +38,14 @@ def test_get_subject_grade_book():
         selectedSubject["classID"],
         selectedSubject["termID"],
     )
-
     # Make sure the html returned has that class name is not a 500 Error
     assert (
         selectedSubject["className"] in response
         and "500 - Internal server error." not in response
     )
 
-
-def test_get_all():
+    # Test get_all
     loop = asyncio.get_event_loop()
-    user = User(username, password)
     # Run in the event loop
     data = loop.run_until_complete(asyncio.gather(user.get_all()))[0]
 
