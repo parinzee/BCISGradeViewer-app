@@ -8,5 +8,6 @@ router = APIRouter(tags=["User"])
 
 @router.get("/get_all/")
 async def get_all(userDetails: OauthUser = Depends(get_current_user)):
-    user = User(userDetails["username"], userDetails["password"])
+    # TODO: This does not currently work. Need to hook up to SQL
+    user = User(userDetails["username"])
     return await user.get_all()

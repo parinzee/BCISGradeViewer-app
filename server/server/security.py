@@ -18,7 +18,6 @@ f = Fernet(FERNET_KEY)
 # Create a user class for oauth
 class OauthUser(BaseModel):
     username: str
-    password: str
 
 
 # Oauth, gets current user by jwt decoding.
@@ -28,7 +27,7 @@ async def get_current_user(token: str = Depends(oauthScheme)):
     except JWTError:
         raise CredentialsException
     username: str = payload.get("sub")
-    return {"sub": username}
+    return {"username": username}
 
 
 # Create access JWT
