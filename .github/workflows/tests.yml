@@ -37,6 +37,7 @@ jobs:
                   GV_USERNAME: ${{ secrets.GV_USERNAME }}
                   GV_PASS: ${{ secrets.GV_PASS }}
                   GV_STUDENTID: ${{ secrets.GV_STUDENTID }}
+                  GV_SECRET: ${{ secrets.GV_SECRET }}
               run: |
                   cd server
                   poetry run pytest --cov
