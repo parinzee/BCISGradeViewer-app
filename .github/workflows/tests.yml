@@ -37,6 +37,7 @@ jobs:
                   GV_TEST_USERNAME: ${{ secrets.GV_TEST_USERNAME }}
                   GV_TEST_PASSWORD: ${{ secrets.GV_TEST_PASSWORD }}
                   GV_TEST_STUDENTID: ${{ secrets.GV_TEST_STUDENTID }}
+                  GV_TEST_STUDENT: ${{ secrets.GV_TEST_STUDENT }}
                   GV_DISTRICT_CODE: ${{ secrets.GV_DISTRICT_CODE }}
                   GV_SECRET: ${{ secrets.GV_SECRET }}
                   GV_FERNET: ${{ secrets.GV_FERNET }}
