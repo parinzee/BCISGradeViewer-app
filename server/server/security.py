@@ -12,8 +12,8 @@ from .exceptions import CredentialsException
 # Depends on the oauth scheme
 oauthScheme = OAuth2PasswordBearer(tokenUrl="token")
 
-# Create Fernet class
-f = Fernet(FERNET_KEY)
+# Create Fernet class used in server/sql/crud.py
+encryptor = Fernet(FERNET_KEY)
 
 # Create a user class for oauth
 class OauthUser(BaseModel):

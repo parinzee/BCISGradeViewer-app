@@ -23,7 +23,7 @@ def test_authorization():
 
     # Try feeding wrong user details
     response = client.post(
-        "/token/",
+        "/token/?student=false",
         {
             "grant_type": None,
             "username": "foo",
@@ -38,7 +38,7 @@ def test_authorization():
 
     # Finally try the right user details
     response = client.post(
-        "/token/",
+        "/token/?student=false",
         {
             "grant_type": None,
             "username": username,
