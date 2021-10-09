@@ -11,5 +11,6 @@ JSON_RESPONSE = ORJSONResponse  # Response type. See fastapi docs https://fastap
 
 ### Oauth2 Settings ###
 ACCESS_TOKEN_EXPIRE_DAYS = 15  # Time before Oauth2 token expires.
-SECRET_KEY = environ["GV_SECRET"]  # Key to sign JWT tokens (run: openssl rand -hex 32)
 ALGORITHM = "HS256"  # Algorithm for signing JWT
+SECRET_KEY = environ["GV_SECRET"]  # Key to sign JWT tokens (run: openssl rand -hex 32)
+FERNET_KEY = environ["GV_FERNET"]  # Encrypt password with Fernet. (generate key first)

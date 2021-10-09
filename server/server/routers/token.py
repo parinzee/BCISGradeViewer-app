@@ -21,8 +21,6 @@ async def login(formData: OAuth2PasswordRequestForm = Depends()):
     except NotAuthenticated:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
 
-    access_token = create_access_token(
-        {"name": formData.username, "pass": formData.password}
-    )
+    access_token = create_access_token({"sub": formData.username})
 
     return {"access_token": access_token, "token_type": "bearer"}
