@@ -21,9 +21,6 @@ class Parent(ParentBase):
 class StudentBase(BaseModel):
     username: Optional[str] = None
     password: Optional[str] = None
-    student_id: int
-    parent: str
-    classes: List[dict]
 
 
 class StudentCreate(StudentBase):
@@ -32,6 +29,9 @@ class StudentCreate(StudentBase):
 
 class Student(StudentBase):
     id: int
+    student_id: int
+    parent: str
+    classes: List[dict]
 
     class Config:
         orm_mode = True

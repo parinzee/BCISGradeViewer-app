@@ -9,13 +9,15 @@ from ..config import DISTRICT_CODE, DISTRICT_CODE_URL
 from ..exceptions import NotAuthenticated
 
 
-class User:
+class Parent:
     """
     Scrape data from user account.
     """
 
     def __init__(
-        self, username: str, password: str, userType: str = "PARENTSWEB-PARENT"
+        self,
+        username: str,
+        password: str,
     ) -> None:
         """
         Takes in Username and Password of Account
@@ -24,7 +26,7 @@ class User:
         self.username = username
         self.password = password
         self.districtCode = DISTRICT_CODE
-        self.userType = userType
+        self.userType = "PARENTSWEB-PARENT"
         self.baseURL = f"https://{DISTRICT_CODE_URL}.client.renweb.com/pwr"
         self.session = requests.session()
 

@@ -27,7 +27,8 @@ async def get_current_user(token: str = Depends(oauthScheme)):
     except JWTError:
         raise CredentialsException
     username: str = payload.get("sub")
-    return {"username": username}
+    student: bool = payload.get("student")
+    return {"username": username, "student": student}
 
 
 # Create access JWT

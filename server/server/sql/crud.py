@@ -26,21 +26,25 @@ def create_parent(db: Session, parent: schemas.ParentCreate):
 
 
 def _handle_student(student: schemas.StudentCreate):
-    if student.username and student.password:
-        encryptedPassword = encryptor.encrypt(student.password.encode("utf-8"))
-        return models.Student(
-            username=student.username,
-            password=encryptedPassword,
-            student_id=student.student_id,
-            parent=student.parent,
-            classes=student.classes,
-        )
-    else:
-        return models.Student(
-            student_id=student.student_id,
-            parent=student.parent,
-            classes=student.classes,
-        )
+    # TODO: Implement getting user id from student from server/scraper/student.
+    # if student.username and student.password:
+    #     encryptedPassword = encryptor.encrypt(student.password.encode("utf-8"))
+    #     return models.Student(
+    #         username=student.username,
+    #         password=encryptedPassword,
+    #         student_id=student.student_id,
+    #         parent=student.parent,
+    #         classes=student.classes,
+    #     )
+    # else:
+    #     return models.Student(
+    #         student_id=student.student_id,
+    #         parent=student.parent,
+    #         classes=student.classes,
+    #     )
+    return models.Student(
+        student_id=student.student_id, parent=student.parent, classes=student.classes
+    )
 
 
 def create_student(db: Session, student: schemas.StudentCreate):

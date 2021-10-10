@@ -1,24 +1,32 @@
 import asyncio
 from os import environ
-from server.scraper.user import User
+from server.scraper.parent import Parent
+from server.scraper.student import Student
 from random import randint
 
 # Get the username, password, and student id to test against from ENV variables
 username = environ["GV_TEST_USERNAME"]
 password = environ["GV_TEST_PASSWORD"]
 studentID = int(environ["GV_TEST_STUDENTID"])
+student = environ["GV_TEST_STUDENT"]
 
 # Tests the Connectivity
 def test_connectivity():
     # Establishes connection
-    user = User(username, password)
+    if student == "false":
+        user = Parent(username, password)
+    else:
+        user = Student(username, password)
     # Test deletion
     del user
     assert True
 
 
 def test_methods():
-    user = User(username, password)
+    if student == "false":
+        user = Parent(username, password)
+    else:
+        user = Student(username, password)
     assert user.get_events() != []
 
     assert user.get_studentIDs() != []
