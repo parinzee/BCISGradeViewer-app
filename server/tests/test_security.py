@@ -17,6 +17,28 @@ student = environ[
 ]  # Is the account for testing a student or a parent's?
 
 
+def test_not_allowed():
+    # Try accessing a path that requires login
+    response = client.get("/user/get_all/")
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Not authenticated"}
+
+    # Try feeding wrong user details
+    response = client.post(
+        "/token/?student=false",
+        {
+            "grant_type": None,
+            "username": "foo",
+            "password": "bar",
+            "scope": None,
+            "client_id": None,
+            "client_secret": None,
+        },
+    )
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Incorrect username or password"}
+
+
 def test_get_current_user():
     loop = asyncio.get_event_loop()
 

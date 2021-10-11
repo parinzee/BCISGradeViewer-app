@@ -8,6 +8,7 @@ from cryptography.fernet import Fernet
 
 from .config import ACCESS_TOKEN_EXPIRE_DAYS, ALGORITHM, SECRET_KEY, FERNET_KEY
 from .exceptions import CredentialsException
+from .sql.schemas import User
 
 # Depends on the oauth scheme
 oauthScheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -28,7 +29,7 @@ async def get_current_user(token: str = Depends(oauthScheme)):
         raise CredentialsException
     username: str = payload.get("sub")
     student: bool = payload.get("student")
-    return {"username": username, "student": student}
+    return User(username=username, student=student)
 
 
 # Create access JWT

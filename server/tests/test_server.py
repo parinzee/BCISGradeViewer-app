@@ -18,28 +18,7 @@ def test_version():
     assert __version__ == "0.1.0"
 
 
-def test_authorization():
-    # Try accessing a path that requires login
-    response = client.get("/get_all/")
-    assert response.status_code == 401
-    assert response.json() == {"detail": "Not authenticated"}
-
-    # Try feeding wrong user details
-    response = client.post(
-        "/token/?student=false",
-        {
-            "grant_type": None,
-            "username": "foo",
-            "password": "bar",
-            "scope": None,
-            "client_id": None,
-            "client_secret": None,
-        },
-    )
-    assert response.status_code == 401
-    assert response.json() == {"detail": "Incorrect username or password"}
-
-    # Finally try the right user details
+def test_root_get_all():
     response = client.post(
         f"/token/?student={student}",
         {
@@ -51,6 +30,17 @@ def test_authorization():
             "client_secret": None,
         },
     )
-    jsonResponse: dict = response.json()
-    assert response.status_code == 200
-    assert "access_token" in jsonResponse and "token_type" in jsonResponse
+
+    # Get JWT
+    token = response.json()["access_token"]
+
+    # Try sending it to get_current_user
+    response = client.get(
+        "/user/get_all/", headers={"Authorization": f"Bearer {token}"}
+    )
+
+    data = response.json()
+    # Make sure the dictionaries are not empty.
+    assert data["events"] != []
+    assert data["studentIDs"] != []
+    assert data["subjects"] != []

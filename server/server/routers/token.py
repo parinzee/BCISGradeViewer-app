@@ -4,7 +4,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from ..security import get_current_user, OauthUser, create_access_token
 from ..scraper.parent import Parent
 from ..scraper.student import Student
-from ..exceptions import NotAuthenticated
+from ..exceptions import IncorrectCredentialsException, NotAuthenticated
 from ..dependencies import get_db
 from ..sql import crud, schemas
 from sqlalchemy.orm import Session
@@ -20,8 +20,8 @@ async def get_curr_user(current_user: OauthUser = Depends(get_current_user)):
 # Login at /token/
 @router.post("/")
 def login(
-    student: bool,
     backgroundTask: BackgroundTasks,
+    student: bool = False,
     formData: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
 ):
@@ -52,9 +52,11 @@ def login(
                     ),
                 )
         except NotAuthenticated:
-            raise HTTPException(
-                status_code=401, detail="Incorrect username or password"
-            )
+            raise IncorrectCredentialsException
+
+    # IF they do exist, make sure that the passwords match.
+    if user.password != formData.password:
+        raise IncorrectCredentialsException
 
     # Give user the access token
     access_token = create_access_token({"sub": formData.username, "student": student})

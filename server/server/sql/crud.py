@@ -6,13 +6,22 @@ from ..security import encryptor
 # Gets the user.
 def get_user(db: Session, username: str, student: bool):
     if student:
-        return (
+        user = (
             db.query(models.Student).filter(models.Student.username == username).first()
         )
     else:
-        return (
+        user = (
             db.query(models.Parent).filter(models.Parent.username == username).first()
         )
+    if user is None:
+        return None
+
+    if user.password:
+        decryptedPassword = encryptor.decrypt(user.password)
+    else:
+        decryptedPassword = None
+    user.password = decryptedPassword.decode("utf-8")
+    return user
 
 
 def create_parent(db: Session, parent: schemas.ParentCreate):
