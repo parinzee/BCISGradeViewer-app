@@ -1,6 +1,4 @@
 from .parent import Parent
-from ..config import DISTRICT_CODE, DISTRICT_CODE_URL
-import requests
 
 
 # Student inherits most properties from the parents. Except the few are changed below
@@ -11,15 +9,7 @@ class Student(Parent):
         password: str,
     ) -> None:
         """
-        Takes in Username and Password of Account
+        Takes in Username and Password of a students account. Inherits from Parent.
         """
-        # Initialize values
-        self.username = username
-        self.password = password
-        self.districtCode = DISTRICT_CODE
-        self.userType = "PARENTSWEB-STUDENT"
-        self.baseURL = f"https://{DISTRICT_CODE_URL}.client.renweb.com/pwr"
-        self.session = requests.session()
-
-        # Perform authentication
-        self._auth()
+        # Inherits from parents but instead passes PARENTSWEB-STUDENT
+        super().__init__(username, password, "PARENTSWEB-STUDENT")

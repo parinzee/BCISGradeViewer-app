@@ -15,9 +15,7 @@ class Parent:
     """
 
     def __init__(
-        self,
-        username: str,
-        password: str,
+        self, username: str, password: str, userType: str = "PARENTSWEB-PARENT"
     ) -> None:
         """
         Takes in Username and Password of Account
@@ -26,7 +24,7 @@ class Parent:
         self.username = username
         self.password = password
         self.districtCode = DISTRICT_CODE
-        self.userType = "PARENTSWEB-PARENT"
+        self.userType = userType
         self.baseURL = f"https://{DISTRICT_CODE_URL}.client.renweb.com/pwr"
         self.session = requests.session()
 
