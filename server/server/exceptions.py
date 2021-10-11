@@ -12,5 +12,5 @@ CredentialsException = HTTPException(
 )
 
 IncorrectCredentialsException = HTTPException(
-    status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect Username or Password"
+    status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password"
 )
