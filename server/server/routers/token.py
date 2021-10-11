@@ -55,7 +55,7 @@ def login(
             raise IncorrectCredentialsException
 
     # IF they do exist, make sure that the passwords match.
-    if user.password != formData.password:
+    if user and user.password != formData.password:
         raise IncorrectCredentialsException
 
     # Give user the access token
