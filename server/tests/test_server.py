@@ -36,7 +36,7 @@ def test_root_get_all():
 
     # Try sending it to get_current_user
     response = client.get(
-        "/user/get_all/", headers={"Authorization": f"Bearer {token}"}
+        "/user/dashboard/", headers={"Authorization": f"Bearer {token}"}
     )
 
     data = response.json()

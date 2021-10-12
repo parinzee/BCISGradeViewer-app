@@ -1,21 +1,18 @@
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
+from fastapi import APIRouter, Depends, BackgroundTasks
+from typing import Union
 from fastapi.security import OAuth2PasswordRequestForm
 
-from ..security import get_current_user, OauthUser, create_access_token
+from ..security import create_access_token
+from ..dependencies import get_current_user, get_db
 from ..scraper.parent import Parent
 from ..scraper.student import Student
 from ..exceptions import IncorrectCredentialsException, NotAuthenticated
-from ..dependencies import get_db
 from ..sql import crud, schemas
+from ..scraper.parent import Parent
+from ..scraper.student import Student
 from sqlalchemy.orm import Session
 
 router = APIRouter(tags=["Token"], prefix="/token")
-
-# Gets the current user at /token/me
-@router.get("/me/")
-async def get_curr_user(current_user: OauthUser = Depends(get_current_user)):
-    return current_user
-
 
 # Login at /token/
 @router.post("/")

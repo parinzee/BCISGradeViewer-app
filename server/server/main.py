@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from .config import JSON_RESPONSE
-from .routers import root, token
+from .routers import user, token
 
 from .sql import models, database
 
@@ -13,7 +13,7 @@ models.Base.metadata.create_all(bind=database.engine)
 app = FastAPI(default_response_class=JSON_RESPONSE)
 
 # Include routers form .routers
-app.include_router(root.router)
+app.include_router(user.router)
 app.include_router(token.router)
 
 

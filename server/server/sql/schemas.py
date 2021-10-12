@@ -4,20 +4,15 @@ from pydantic import BaseModel
 # For more info see fastapi documentation: https://fastapi.tiangolo.com/tutorial/sql-databases/
 class UserBase(BaseModel):
     username: str
-
-
-# This class for getting current user
-class User(UserBase):
-    student: bool
+    password: str
 
 
 class ParentCreate(UserBase):
-    password: str
+    pass
 
 
 class Parent(UserBase):
     id: int
-    password: str
 
     class Config:
         orm_mode = True

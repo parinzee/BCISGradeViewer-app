@@ -1,10 +1,12 @@
 import asyncio
-from server.security import get_current_user
+from server.dependencies import get_current_user
 from server.exceptions import CredentialsException
+from jose import jwt, JWTError
 
 from fastapi.testclient import TestClient
 from server.main import app
 from os import environ
+from server.config import SECRET_KEY, ALGORITHM
 
 client = TestClient(app)
 
@@ -19,7 +21,7 @@ student = environ[
 
 def test_not_allowed():
     # Try accessing a path that requires login
-    response = client.get("/user/get_all/")
+    response = client.get("/user/dashboard/")
     assert response.status_code == 401
     assert response.json() == {"detail": "Not authenticated"}
 
@@ -66,6 +68,5 @@ def test_get_current_user():
 
     # Get the correct JWT
     token = response.json()["access_token"]
-    # Try sending it to get_current_user
-    response = client.get("/token/me/", headers={"Authorization": f"Bearer {token}"})
-    assert response.json()["username"] == username
+    decodedToken = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    assert username == decodedToken.get("sub")
