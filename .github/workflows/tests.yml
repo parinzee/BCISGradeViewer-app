@@ -44,8 +44,8 @@ jobs:
                   DATABASE_URL: ${{ secrets.DATABASE_URL }}
               run: |
                   cd server
-                  poetry run pytest --cov
+                  poetry run pytest --cov --cov-report=xml
             - name: Upload Coverage
               uses: codecov/codecov-action@v2
               with:
-                  files: ./server/.coverage
+                  files: ./server/coverage.xml
