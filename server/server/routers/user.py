@@ -10,7 +10,7 @@ router = APIRouter(tags=["User"], prefix="/user")
 
 
 @router.get("/dashboard/")
-async def get_all(
+async def get_dasboard(
     user: Union[Parent, Student] = Depends(get_current_user),
 ):
     return await user.get_all()
@@ -23,7 +23,7 @@ async def get_events(
     return user.get_events()
 
 
-@router.get("/studentIDs/")
+@router.get("/studentids/")
 async def get_studentIDs(
     user: Union[Parent, Student] = Depends(get_current_user),
 ):
