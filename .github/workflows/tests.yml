@@ -48,4 +48,4 @@ jobs:
             - name: Upload Coverage
               uses: codecov/codecov-action@v2
               with:
-                  files: ./coverage
+                  files: ./server/.coverage
