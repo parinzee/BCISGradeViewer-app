@@ -45,3 +45,7 @@ jobs:
               run: |
                   cd server
                   poetry run pytest --cov
+            - name: Upload Coverage
+              uses: codecov/codecov-action@v2
+              with:
+                  files: ./coverage
