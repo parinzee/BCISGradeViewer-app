@@ -1,11 +1,11 @@
 {
 	"expo": {
 		"name": "Grade Viewer",
-		"slug": "GV BCIS",
+		"slug": "GV-BCIS",
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"icon": "./assets/images/icon.png",
-		"scheme": "myapp",
+		"scheme": "gvb",
 		"userInterfaceStyle": "automatic",
 		"splash": {
 			"image": "./assets/images/splash.png",
