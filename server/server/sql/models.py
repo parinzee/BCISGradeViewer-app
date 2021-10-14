@@ -20,4 +20,3 @@ class Student(Base):
     username = Column(String(30), nullable=True)
     password = Column(String, nullable=True)
     student_id = Column(Integer, nullable=False)
-    parent = Column(ForeignKey("parents.username"), nullable=True)

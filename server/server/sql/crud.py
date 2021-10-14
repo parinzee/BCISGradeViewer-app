@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
 from ..security import encryptor
+from ..scraper.student import Student
 
 
 # Gets the user.
@@ -35,24 +36,12 @@ def create_parent(db: Session, parent: schemas.ParentCreate):
 
 
 def _handle_student(student: schemas.StudentCreate):
-    # TODO: Implement getting user id from student from server/scraper/student.
-    # if student.username and student.password:
-    #     encryptedPassword = encryptor.encrypt(student.password.encode("utf-8"))
-    #     return models.Student(
-    #         username=student.username,
-    #         password=encryptedPassword,
-    #         student_id=student.student_id,
-    #         parent=student.parent,
-    #         classes=student.classes,
-    #     )
-    # else:
-    #     return models.Student(
-    #         student_id=student.student_id,
-    #         parent=student.parent,
-    #         classes=student.classes,
-    #     )
+    scraper = Student(student.username, student.password)
+    encryptedPassword = encryptor.encrypt(student.password.encode("utf-8"))
     return models.Student(
-        student_id=student.student_id, parent=student.parent, classes=student.classes
+        username=student.username,
+        password=encryptedPassword,
+        student_id=scraper.get_studentIDs(),
     )
 
 
@@ -74,7 +63,6 @@ def update_student(db: Session, student: schemas.StudentCreate):
             {
                 models.Student.username: student.username,
                 models.Student.password: encryptedPassword,
-                models.Student.parent: student.parent,
             }
         )
     db.commit()
@@ -94,4 +82,4 @@ def update_parent(db: Session, parent: schemas.ParentCreate):
     return dbUser
 
 
-# No delete statement due to us not actually being the provider of the API
+# No delete statement due to us not actually being the provider of the database. We're merely webscraping.

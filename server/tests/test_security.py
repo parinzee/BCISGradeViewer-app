@@ -55,7 +55,7 @@ def test_get_current_user():
 
     # Test good JWT
     response = client.post(
-        f"/token/?student={student}",
+        f"/token/?isStudent={student}",
         {
             "grant_type": None,
             "username": username,

@@ -99,7 +99,7 @@ class Parent:
 
         return eventList
 
-    def get_studentIDs(self) -> List[str]:
+    def get_studentIDs(self) -> List[int]:
         """
         Get all the students that the parents have.
         """

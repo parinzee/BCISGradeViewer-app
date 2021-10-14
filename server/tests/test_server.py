@@ -10,9 +10,9 @@ client = TestClient(app)
 # Get a valid username & password to test against from ENV variables
 username = environ["GV_TEST_USERNAME"]
 password = environ["GV_TEST_PASSWORD"]
-student = environ[
-    "GV_TEST_STUDENT"  # false or true
-]  # Is the account for testing a student or a parent's?
+isStudent = (
+    environ["GV_TEST_STUDENT"] == "true"  # false or true
+)  # Is the account for testing a student or a parent's?
 studentID = int(environ["GV_TEST_STUDENTID"])  # One student id
 token = ""
 
@@ -23,7 +23,7 @@ def test_version():
 
 def test_user_get_dashboard():
     response = client.post(
-        f"/token/?student={student}",
+        f"/token/?isStudent={str(isStudent).lower()}",
         {
             "grant_type": None,
             "username": username,
@@ -53,7 +53,8 @@ def test_user_get_dashboard():
 def test_user_subjects_and_gradebook():
     global token
     response = client.get(
-        f"/user/subjects/?{studentID}", headers={"Authorization": f"Bearer {token}"}
+        f"/user/subjects/?studentID={studentID}",
+        headers={"Authorization": f"Bearer {token}"},
     )
     # Make sure that the list only have the ones from the student id sent.
     subjects = response.json()

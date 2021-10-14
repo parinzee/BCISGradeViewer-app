@@ -25,12 +25,12 @@ async def get_current_user(token: str = Depends(oauthScheme)):
     except JWTError:
         raise CredentialsException
     username: str = payload.get("sub")
-    student: bool = payload.get("student")
+    isStudent: bool = payload.get("isStudent")
     password: str = get_user(
-        db, username, student
+        db, username, isStudent
     ).password  # Fetch user from the database and get their password
     db.close()
-    if student:
+    if isStudent:
         return Student(username, password)
     else:
         return Parent(username, password)

@@ -27,7 +27,6 @@ class Student(StudentCreate):
     id: int
     password: str
     student_id: int
-    parent: str
     classes: List[dict]
 
     class Config:
