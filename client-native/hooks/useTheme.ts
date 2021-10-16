@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'; 
 import { LightTheme, DarkTheme } from '../constants/Theme';
 import { useColorScheme } from 'react-native';
 
