@@ -30,4 +30,4 @@ const newPaperDark = {
 }
 
 export const LightTheme = merge(NavigationDefaultTheme, newPaperDefault);
-export const DarkTheme = merge(NavigationDefaultTheme, newPaperDark);
+export const DarkTheme = merge(NavigationDarkTheme, newPaperDark);
