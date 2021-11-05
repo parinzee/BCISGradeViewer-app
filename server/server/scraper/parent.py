@@ -126,6 +126,8 @@ class Parent:
 
         # Initialize list for storing urls
         classes = []
+        # Initialize list for storing grades and actual class name
+        subjectsAndGrade = []
 
         # Access the Page
         page = self.session.get(f"{self.baseURL}/student/index.cfm").text
@@ -137,7 +139,6 @@ class Parent:
         for table in tables:
             for tableBody in table.find_all("tbody"):
                 # Process is below is to find the subject names and grade
-                subjectsAndGrade = []
                 subjects = [i.text.strip("\n") for i in tableBody.find_all("td")]
                 for index, _ in enumerate(subjects):
                     if index % 3 == 0:

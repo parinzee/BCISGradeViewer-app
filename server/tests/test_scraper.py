@@ -2,6 +2,7 @@ import asyncio
 from os import environ
 from server.scraper.parent import Parent
 from server.scraper.student import Student
+from server.scraper.website import Website
 from random import randint
 
 # Get the username, password, and student id to test against from ENV variables
@@ -61,3 +62,16 @@ def test_methods():
     assert data["events"] != []
     assert data["studentIDs"] != []
     assert data["subjects"] != []
+
+
+def test_website():
+    # This tests the reset password functionality
+    web = Website("foo@bar.com")
+    assert (
+        web.forgot_credentials()
+        == "If a valid email address was found, an email has been sent with instructions for how to reset your password."
+    )
+    assert (
+        web.create_account()
+        == "An email has been sent to foo@bar.com with instructions for how to create a Family Portal login."
+    )
